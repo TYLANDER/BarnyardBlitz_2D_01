@@ -2,14 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement2D : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-    // Speed at which the player moves
-    public float speed = 5f;
-    // Prefab for the bullet
-    public GameObject bulletPrefab;
-    // Transform representing the spawn point for bullets
-    public Transform bulletSpawnPoint;
+    public float speed = 5f; // Speed at which the player moves
+    public GameObject bulletPrefab; // Prefab for the bullet
+    public Transform bulletSpawnPoint; // Transform representing the spawn point for bullets
 
     void Start()
     {
@@ -44,6 +41,7 @@ public class PlayerMovement2D : MonoBehaviour
         if (bulletPrefab != null && bulletSpawnPoint != null)
         {
             Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+            Debug.Log("Bullet fired at: " + Time.time);
         }
     }
 }

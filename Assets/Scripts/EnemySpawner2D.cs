@@ -10,6 +10,14 @@ public class EnemySpawner2D : MonoBehaviour
     public int maxEnemies = 5; // Maximum number of enemies on screen at once
     private List<GameObject> activeEnemies = new List<GameObject>(); // List to keep track of active enemies
 
+    public GameObject background; // Reference to the background object
+    private float minX, maxX, minY, maxY; // Bounds of the background
+
+    void Start()
+    {
+        CalculateBackgroundBounds();
+    }
+
     void Update()
     {
         // Remove any destroyed enemies from the list
@@ -20,8 +28,8 @@ public class EnemySpawner2D : MonoBehaviour
         {
             nextSpawn = Time.time + spawnRate;
 
-            // Calculate a random spawn position at the top of the viewport
-            Vector2 spawnPosition = new Vector2(Random.Range(-8f, 8f), 6f);
+            // Calculate a random spawn position just above the top of the background bounds
+            Vector2 spawnPosition = new Vector2(Random.Range(minX - 3f, maxX + 3f), maxY + 5f); // Adding 1f to ensure they spawn out of view
 
             // Instantiate a new enemy at the spawn position
             GameObject newEnemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
@@ -29,6 +37,23 @@ public class EnemySpawner2D : MonoBehaviour
 
             // Debug log for spawning new enemy
             Debug.Log("Spawned Enemy at: " + Time.time + " Position: " + spawnPosition);
+        }
+    }
+
+    void CalculateBackgroundBounds()
+    {
+        SpriteRenderer renderer = background.GetComponent<SpriteRenderer>();
+
+        if (renderer != null)
+        {
+            minX = renderer.bounds.min.x;
+            maxX = renderer.bounds.max.x;
+            minY = renderer.bounds.min.y;
+            maxY = renderer.bounds.max.y;
+        }
+        else
+        {
+            Debug.LogError("Background does not have a SpriteRenderer component.");
         }
     }
 }

@@ -514,8 +514,8 @@ MonoBehaviour:
   speed: 5
   bulletPrefab: {fileID: 696113571142363148, guid: 10c7ec06df5c7414881afb3e6ea1d0c9, type: 3}
   bulletSpawnPoint: {fileID: 515113187}
-  minBounds: {x: -3.3, y: -4.6}
-  maxBounds: {x: 3.3, y: 4.6}
+  minBounds: {x: -7.3, y: -4.5}
+  maxBounds: {x: 7.3, y: 4.5}
 --- !u!114 &381253948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -750,7 +750,7 @@ Camera:
     y: 0
     width: 16
     height: 9
-  near clip plane: 3.17
+  near clip plane: 4.5
   far clip plane: 998.81
   field of view: 60
   orthographic: 1
@@ -1070,7 +1070,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.006649852}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1081,7 +1081,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1440, y: 1080}
+  m_Size: {x: 2880, y: 1080}
   m_EdgeRadius: 0
 --- !u!114 &1224017521
 MonoBehaviour:

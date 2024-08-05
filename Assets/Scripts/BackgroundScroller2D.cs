@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class BackgroundScroller2D : MonoBehaviour
 {
-    // Speed at which the background scrolls
     public float scrollSpeed = 0.1f;
+
+    private Vector2 startPosition;
+
+    void Start()
+    {
+        startPosition = transform.position;
+    }
 
     void Update()
     {
-        // Calculate the offset based on time and scroll speed
-        Vector2 offset = new Vector2(0, Time.time * scrollSpeed);
-        // Apply the offset to the material to create a scrolling effect
-        GetComponent<Renderer>().material.mainTextureOffset = offset;
+        float newPosition = Mathf.Repeat(Time.time * scrollSpeed, 1);
+        transform.position = startPosition + Vector2.down * newPosition;
     }
 }

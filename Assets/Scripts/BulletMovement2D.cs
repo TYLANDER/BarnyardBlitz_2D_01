@@ -23,4 +23,18 @@ public class BulletMovement2D : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            EnemyBase enemy = other.GetComponent<EnemyBase>();
+            if (enemy != null)
+            {
+                enemy.HitByPlayer();
+                // Destroy the bullet after hitting the enemy
+                Destroy(gameObject);
+            }
+        }
+    }
 }

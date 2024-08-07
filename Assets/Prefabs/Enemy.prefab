@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2112093173470321569}
   - component: {fileID: 6503198326365659717}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: enemy_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 3475929456094978938}
   - component: {fileID: 6979169920112399214}
   - component: {fileID: 9008997618093693221}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -254,3 +254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreValue: 100
+  enemyBulletPrefab: {fileID: 696113571142363148, guid: 53454139962045141a75855e758c8bf3, type: 3}
+  initialShootDelay: 0.5
+  shootInterval: 2
+  speed: 1

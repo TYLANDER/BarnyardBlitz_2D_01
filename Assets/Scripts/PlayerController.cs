@@ -41,17 +41,22 @@ public class PlayerController : MonoBehaviour
         // Check if the space key is pressed to shoot
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Shoot();
+            Debug.Log("Player attempting to shoot.");
+            ShootBullet();
         }
     }
 
-    void Shoot()
+    void ShootBullet()
     {
         // Instantiate a bullet at the spawn point
         if (bulletPrefab != null && bulletSpawnPoint != null)
         {
             Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
             Debug.Log("Bullet fired at: " + Time.time);
+        }
+        else
+        {
+            Debug.LogError("Bullet prefab or bullet spawn point is not assigned in the PlayerController script.");
         }
     }
 }

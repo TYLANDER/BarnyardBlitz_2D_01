@@ -53,28 +53,15 @@ public class EnemyBase : MonoBehaviour
         {
             GameObject bullet = Instantiate(enemyBulletPrefab, transform.position, Quaternion.identity);
             bullet.layer = LayerMask.NameToLayer("EnemyBullet"); // Set bullet to EnemyBullet layer
-            Debug.Log("Bullet instantiated.");
-
-            // Hard-code the direction to be strictly downward
-            Vector2 direction = Vector2.down;
-
-            // Set the bullet's velocity downward
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            if (rb != null)
-            {
-                rb.velocity = direction * 5f; // Adjust speed as necessary
-                Debug.Log("Bullet velocity set downward.");
-            }
-            else
-            {
-                Debug.LogError("Bullet does not have a Rigidbody2D component.");
-            }
+            bullet.AddComponent<TrackingBullet>(); // Add TrackingBullet script to the bullet
+            Debug.Log("Bullet instantiated and tracking the player.");
         }
         else
         {
             Debug.LogError("Bullet prefab is not assigned in the EnemyBase script.");
         }
     }
+
 
 
     // Method to call when the enemy is hit by a player bullet

@@ -516,6 +516,9 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 515113187}
   minBounds: {x: -7.3, y: -4.5}
   maxBounds: {x: 7.3, y: 4.5}
+  maxHealth: 3
+  gameOverText: {fileID: 0}
+  creditsText: {fileID: 0}
 --- !u!114 &381253948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1851,6 +1854,10 @@ PrefabInstance:
     - target: {fileID: 696113571142363148, guid: 10c7ec06df5c7414881afb3e6ea1d0c9, type: 3}
       propertyPath: m_Name
       value: Bullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 1747378430889548994, guid: 10c7ec06df5c7414881afb3e6ea1d0c9, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3169703919849397194, guid: 10c7ec06df5c7414881afb3e6ea1d0c9, type: 3}
       propertyPath: m_LocalPosition.x

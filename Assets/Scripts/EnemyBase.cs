@@ -10,9 +10,9 @@ public class EnemyBase : MonoBehaviour
     public GameObject enemyBulletPrefab; // Prefab for the enemy bullet
     public float initialShootDelay = 0.5f; // Initial delay before shooting
     public float shootInterval = 2f; // Time interval between shots
+    public float speed = 1f; // Speed of the enemy, adjustable in the Inspector
     protected Transform player; // Reference to the player
     private float shootTimer; // Timer to keep track of shooting intervals
-    public float speed = 1f; // Speed of the enemy
 
     protected virtual void Start()
     {
@@ -48,21 +48,24 @@ public class EnemyBase : MonoBehaviour
     protected virtual void FireBullet()
     {
         Debug.Log("FireBullet method called.");
-        // Instantiate a bullet at the enemy's position
-        if (enemyBulletPrefab != null)
+        // Only shoot if the player is found
+        if (player != null)
         {
-            GameObject bullet = Instantiate(enemyBulletPrefab, transform.position, Quaternion.identity);
-            bullet.layer = LayerMask.NameToLayer("EnemyBullet"); // Set bullet to EnemyBullet layer
-            bullet.AddComponent<TrackingBullet>(); // Add TrackingBullet script to the bullet
-            Debug.Log("Bullet instantiated and tracking the player.");
-        }
-        else
-        {
-            Debug.LogError("Bullet prefab is not assigned in the EnemyBase script.");
+            Debug.Log("Enemy firing at player.");
+            // Instantiate a bullet at the enemy's position
+            if (enemyBulletPrefab != null)
+            {
+                GameObject bullet = Instantiate(enemyBulletPrefab, transform.position, Quaternion.identity);
+                bullet.layer = LayerMask.NameToLayer("EnemyBullet"); // Set bullet to EnemyBullet layer
+                bullet.AddComponent<TrackingBullet>(); // Add TrackingBullet script to the bullet
+                Debug.Log("Bullet instantiated and tracking the player.");
+            }
+            else
+            {
+                Debug.LogError("Bullet prefab is not assigned in the EnemyBase script.");
+            }
         }
     }
-
-
 
     // Method to call when the enemy is hit by a player bullet
     public void HitByPlayer()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro; // Add this if you are using TextMeshPro for UI elements
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,6 +10,11 @@ public class PlayerController : MonoBehaviour
     public Transform bulletSpawnPoint; // Transform representing the spawn point for bullets
     public Vector2 minBounds; // Minimum bounds of the game area
     public Vector2 maxBounds; // Maximum bounds of the game area
+    public int maxHealth = 3;
+    private int currentHealth;
+    public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI creditsText;
+    private int credits = 2;
 
     void Start()
     {
@@ -18,6 +24,11 @@ public class PlayerController : MonoBehaviour
         {
             rb.gravityScale = 0;
         }
+
+        // Initialize health and UI
+        currentHealth = maxHealth;
+        gameOverText.gameObject.SetActive(false);
+        UpdateCreditsText();
     }
 
     void Update()
@@ -57,6 +68,45 @@ public class PlayerController : MonoBehaviour
         else
         {
             Debug.LogError("Bullet prefab or bullet spawn point is not assigned in the PlayerController script.");
+        }
+    }
+
+    public void TakeDamage(int amount)
+    {
+        currentHealth -= amount;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        if (credits > 0)
+        {
+            credits--;
+            UpdateCreditsText();
+            currentHealth = maxHealth;
+            // Reset player position and state
+        }
+        else
+        {
+            gameOverText.gameObject.SetActive(true);
+            // Additional game over logic
+        }
+    }
+
+    private void UpdateCreditsText()
+    {
+        creditsText.text = "Credits: " + credits;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
+        {
+            Destroy(collision.gameObject); // Destroy the bullet on collision
+            TakeDamage(1); // Adjust damage amount as needed
         }
     }
 }

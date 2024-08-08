@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro; // Add this if you are using TextMeshPro for UI elements
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,11 +10,16 @@ public class PlayerController : MonoBehaviour
     public Transform bulletSpawnPoint; // Transform representing the spawn point for bullets
     public Vector2 minBounds; // Minimum bounds of the game area
     public Vector2 maxBounds; // Maximum bounds of the game area
-    public int maxHealth = 3;
-    private int currentHealth;
-    public TextMeshProUGUI gameOverText;
-    public TextMeshProUGUI creditsText;
-    private int credits = 2;
+    public int maxHealth = 10; // Maximum health
+    private int currentHealth; // Current health
+    public TextMeshProUGUI gameOverText; // UI Text for Game Over
+    public TextMeshProUGUI creditsText; // UI Text for Credits
+    private int credits = 2; // Starting credits
+    public GameObject gameOverPanel; // Reference to the Game Over Panel
+    public GameObject continuePanel; // Reference to the Continue Panel
+    public TextMeshProUGUI continueText; // Reference to the Continue Text
+    private bool isGameOver = false;
+    private float continueTimer = 5f;
 
     void Start()
     {
@@ -55,6 +60,17 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Player attempting to shoot.");
             ShootBullet();
         }
+
+        //Game Over Logic
+        if (isGameOver)
+        {
+            continueTimer -= Time.deltaTime;
+            continueText.text = "Continue? " + Mathf.Ceil(continueTimer).ToString("0:00");
+            if (continueTimer <= 0)
+            {
+                ShowContinueScreen();
+            }
+        }
     }
 
     void ShootBullet()
@@ -80,7 +96,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Die()
+    void Die()
     {
         if (credits > 0)
         {
@@ -91,9 +107,36 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            gameOverText.gameObject.SetActive(true);
-            // Additional game over logic
+            StartCoroutine(ShowGameOver());
         }
+    }
+
+    IEnumerator ShowGameOver()
+    {
+        gameOverPanel.SetActive(true);
+        isGameOver = true;
+        yield return new WaitForSeconds(5f); // Wait for 5 seconds
+        gameOverPanel.SetActive(false);
+        ShowContinueScreen();
+    }
+
+    void ShowContinueScreen()
+    {
+        gameOverPanel.SetActive(false);
+        continuePanel.SetActive(true);
+        Time.timeScale = 0f; // Pause the game
+    }
+
+    public void OnContinueButton()
+    {
+        continuePanel.SetActive(false);
+        Time.timeScale = 1f; // Resume the game
+                             // Reset player state
+    }
+
+    public void OnQuitButton()
+    {
+        Application.Quit(); // Quit the game
     }
 
     private void UpdateCreditsText()

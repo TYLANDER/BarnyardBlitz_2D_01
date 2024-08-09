@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1773735106094894393}
   - component: {fileID: 3401570166229747500}
   - component: {fileID: 1747378430889548994}
-  - component: {fileID: 6224275563489766214}
   - component: {fileID: 738521890080240635}
   m_Layer: 7
   m_Name: EnemyBullet
@@ -122,19 +121,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
---- !u!114 &6224275563489766214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 696113571142363148}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0087d2e890e4ff74d9c4540c721cbf67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosionPrefab: {fileID: 0}
 --- !u!114 &738521890080240635
 MonoBehaviour:
   m_ObjectHideFlags: 0

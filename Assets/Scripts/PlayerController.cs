@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("PlayerController script started.");
         // Ensure Rigidbody2D component is set to not use gravity
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
@@ -89,55 +90,71 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
+        Debug.Log("Player took damage: " + amount + " at time: " + Time.time);
         currentHealth -= amount;
+        Debug.Log("Player current health: " + currentHealth);
+
         if (currentHealth <= 0)
         {
+            Debug.Log("Player health reached 0. Triggering Die() method.");
             Die();
         }
     }
 
-    void Die()
+    private void Die()
     {
+        // Display the Game Over screen and pause the game
+        gameOverPanel.SetActive(true);
+        Time.timeScale = 0f; // Freeze the game
+
         if (credits > 0)
         {
-            credits--;
-            UpdateCreditsText();
-            currentHealth = maxHealth;
-            // Reset player position and state
+            // Show the Continue screen after the Game Over screen
+            StartCoroutine(ShowContinueScreen());
         }
         else
         {
-            StartCoroutine(ShowGameOver());
+            // No credits left, so just show the Game Over screen indefinitely
+            Debug.Log("No credits left. Game Over.");
         }
     }
 
-    IEnumerator ShowGameOver()
+    IEnumerator ShowContinueScreen()
     {
-        gameOverPanel.SetActive(true);
-        isGameOver = true;
-        yield return new WaitForSeconds(5f); // Wait for 5 seconds
-        gameOverPanel.SetActive(false);
-        ShowContinueScreen();
-    }
+        // Wait for 5 seconds on the Game Over screen
+        yield return new WaitForSecondsRealtime(5f);
 
-    void ShowContinueScreen()
-    {
+        // Hide the Game Over panel and show the Continue panel
         gameOverPanel.SetActive(false);
         continuePanel.SetActive(true);
-        Time.timeScale = 0f; // Pause the game
     }
 
     public void OnContinueButton()
     {
-        continuePanel.SetActive(false);
-        Time.timeScale = 1f; // Resume the game
-                             // Reset player state
+        if (credits > 0)
+        {
+            credits--; // Deduct a credit
+            UpdateCreditsText(); // Update the credits display
+            currentHealth = maxHealth; // Restore player's health
+            continuePanel.SetActive(false); // Hide the continue panel
+            gameOverPanel.SetActive(false); // Ensure the game over panel is hidden
+            Time.timeScale = 1f; // Resume the game
+
+            // Optionally reset the player's position or any other game state here
+            Debug.Log("Player continued. Credits left: " + credits);
+        }
+        else
+        {
+            Debug.Log("No credits left to continue.");
+            // Handle the case where no credits are left, if needed
+        }
     }
 
     public void OnQuitButton()
     {
         Application.Quit(); // Quit the game
     }
+
 
     private void UpdateCreditsText()
     {
@@ -146,10 +163,25 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
+        /* if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
+         {
+             Debug.Log("Player hit by enemy bullet at time: " + Time.time);
+             Destroy(collision.gameObject); // Destroy the bullet on collision
+             TakeDamage(1); // Adjust damage amount as needed
+         }
+        */
+        Debug.Log("Collision detected with: " + collision.gameObject.name);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("Trigger detected with: " + other.gameObject.name);
+        if (other.gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
         {
-            Destroy(collision.gameObject); // Destroy the bullet on collision
+            Debug.Log("Player hit by enemy bullet.");
+            Destroy(other.gameObject); // Destroy the bullet on collision
             TakeDamage(1); // Adjust damage amount as needed
         }
     }
+
 }

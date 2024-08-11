@@ -608,7 +608,8 @@ GameObject:
   - component: {fileID: 381253945}
   - component: {fileID: 381253947}
   - component: {fileID: 381253948}
-  m_Layer: 0
+  - component: {fileID: 381253949}
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -661,7 +662,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.0011992902, y: -0.03432262}
@@ -716,6 +717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b2baee807b97ac4e8de88fac1ae8324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1338216964}
   speed: 5
   bulletPrefab: {fileID: 696113571142363148, guid: 10c7ec06df5c7414881afb3e6ea1d0c9, type: 3}
   bulletSpawnPoint: {fileID: 515113187}
@@ -739,6 +741,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8744deb2e1a5dff49a8898636d07fa75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &381253949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381253942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 192c0669c28dc5848b44869d9f8c322f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuPanel: {fileID: 923025653}
+  gameOverPanel: {fileID: 1498235333}
+  continuePanel: {fileID: 1541760326}
+  continueText: {fileID: 1796977339}
 --- !u!1 &435044419
 GameObject:
   m_ObjectHideFlags: 0
@@ -954,7 +972,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 455357900}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 381253947}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnContinueButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!114 &455357900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1138,7 +1168,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 515113187}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BulletSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2095,6 +2125,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1316578565}
   m_CullTransparentMesh: 1
+--- !u!1 &1338216963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1338216965}
+  - component: {fileID: 1338216964}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1338216964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1338216963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 192c0669c28dc5848b44869d9f8c322f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuPanel: {fileID: 923025653}
+  gameOverPanel: {fileID: 1498235333}
+  continuePanel: {fileID: 1541760326}
+  continueText: {fileID: 1796977339}
+--- !u!4 &1338216965
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1338216963}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 834.87604, y: 432.17004, z: -1.715143}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1417174949
 GameObject:
   m_ObjectHideFlags: 0
@@ -2780,7 +2858,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1562625207}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 381253947}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnQuitButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1562625207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3115,7 +3205,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1793070048}
   - component: {fileID: 1793070049}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: cow_ship_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3400,3 +3490,4 @@ SceneRoots:
   - {fileID: 544230544}
   - {fileID: 1498235336}
   - {fileID: 1541760329}
+  - {fileID: 1338216965}

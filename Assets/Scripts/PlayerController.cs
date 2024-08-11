@@ -5,6 +5,7 @@ using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
+    public UIManager uiManager; // Reference to the UIManager
     public float speed = 5f; // Speed at which the player moves
     public GameObject bulletPrefab; // Prefab for the bullet
     public Transform bulletSpawnPoint; // Transform representing the spawn point for bullets
@@ -101,23 +102,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Die()
+    protected void Die()
     {
-        // Display the Game Over screen and pause the game
-        gameOverPanel.SetActive(true);
-        Time.timeScale = 0f; // Freeze the game
-
-        if (credits > 0)
-        {
-            // Show the Continue screen after the Game Over screen
-            StartCoroutine(ShowContinueScreen());
-        }
-        else
-        {
-            // No credits left, so just show the Game Over screen indefinitely
-            Debug.Log("No credits left. Game Over.");
-        }
+        Debug.Log("Die method called.");
+        uiManager.ShowGameOverPanel(); // Show Game Over panel
     }
+
 
     IEnumerator ShowContinueScreen()
     {

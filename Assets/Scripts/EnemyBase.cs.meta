@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: e244a72e8fa8d684199cf4eba91019e0
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - enemyBulletPrefab: {fileID: 696113571142363148, guid: 53454139962045141a75855e758c8bf3, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

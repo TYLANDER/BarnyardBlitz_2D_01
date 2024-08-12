@@ -286,8 +286,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1061357356}
+  m_Children: []
   m_Father: {fileID: 1498235336}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -724,11 +723,7 @@ MonoBehaviour:
   minBounds: {x: -7.3, y: -4.5}
   maxBounds: {x: 7.3, y: 4.5}
   maxHealth: 3
-  gameOverText: {fileID: 1061357357}
-  creditsText: {fileID: 1430602855}
-  gameOverPanel: {fileID: 1498235333}
-  continuePanel: {fileID: 1541760326}
-  continueText: {fileID: 1796977339}
+  currentHealth: 0
 --- !u!114 &381253948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -757,6 +752,8 @@ MonoBehaviour:
   gameOverPanel: {fileID: 1498235333}
   continuePanel: {fileID: 1541760326}
   continueText: {fileID: 1796977339}
+  creditsText: {fileID: 0}
+  credits: 2
 --- !u!1 &435044419
 GameObject:
   m_ObjectHideFlags: 0
@@ -973,8 +970,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 381253947}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 381253949}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: OnContinueButton
         m_Mode: 1
         m_Arguments:
@@ -1372,6 +1369,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1316578566}
+  - {fileID: 1061357356}
   m_Father: {fileID: 1498235336}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1544,12 +1542,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1061357355}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 213072496}
+  m_Father: {fileID: 836789956}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2048,7 +2046,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Continue? 0:10
+  m_text: 'GAME OVER MAN
+
+    Continue? 0:10'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dfdfa8446b48d4644a7ea24fe060e3d9, type: 2}
   m_sharedMaterial: {fileID: -8462111853016660691, guid: dfdfa8446b48d4644a7ea24fe060e3d9, type: 2}
@@ -2158,6 +2158,8 @@ MonoBehaviour:
   gameOverPanel: {fileID: 1498235333}
   continuePanel: {fileID: 1541760326}
   continueText: {fileID: 1796977339}
+  creditsText: {fileID: 1430602855}
+  credits: 3
 --- !u!4 &1338216965
 Transform:
   m_ObjectHideFlags: 0
@@ -2363,7 +2365,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Credits: 2'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dfdfa8446b48d4644a7ea24fe060e3d9, type: 2}
   m_sharedMaterial: {fileID: -8462111853016660691, guid: dfdfa8446b48d4644a7ea24fe060e3d9, type: 2}
@@ -3291,7 +3293,7 @@ GameObject:
   - component: {fileID: 1796977340}
   - component: {fileID: 1796977339}
   m_Layer: 5
-  m_Name: ContinueText
+  m_Name: ContinueButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

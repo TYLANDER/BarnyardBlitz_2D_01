@@ -1,78 +1,114 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    public GameObject menuPanel; // Reference to the MenuPanel
-    public GameObject gameOverPanel; // Reference to the GameOverPanel
-    public GameObject continuePanel; // Reference to the ContinuePanel
-    public TextMeshProUGUI continueText; // Reference to the ContinueText
+    public GameObject menuPanel; // Reference to the Menu panel, toggled by pressing Escape
+    public GameObject gameOverPanel; // Reference to the Game Over panel, shown when the player dies
+    public GameObject continuePanel; // Reference to the Continue panel, shown after the Game Over panel
+    public TextMeshProUGUI continueText; // Reference to the Continue text, displaying the countdown
+    public TextMeshProUGUI creditsText; // Reference to the Credits text, displaying the number of credits
 
-    private bool isGameOver = false;
-    private float continueTimer = 5f;
+    private PlayerController playerController; // Reference to the PlayerController script
+    public int credits; // Number of credits the player has to continue after dying
+    private bool isGameOver = false; // Flag to check if the game is in a Game Over state
+    private float continueTimer = 3f; // Timer for the countdown before showing the Continue screen
 
     void Start()
     {
-        // Hide all panels at the start
-        menuPanel.SetActive(false);
-        gameOverPanel.SetActive(false);
-        continuePanel.SetActive(false);
+        // Called when the script instance is first loaded
+        menuPanel.SetActive(false); // Hide the Menu panel at the start
+        gameOverPanel.SetActive(false); // Hide the Game Over panel at the start
+        continuePanel.SetActive(false); // Hide the Continue panel at the start
+
+        // Find and reference the PlayerController script in the scene
+        playerController = FindObjectOfType<PlayerController>();
+        UpdateCreditsText(credits); // Initialize credits text
     }
 
     void Update()
     {
-        // Toggle MenuPanel with Escape key
+        // Handle the menu toggling with the Escape key
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             ToggleMenu();
         }
 
-        // Handle continue countdown if game over
+        // Handle the countdown for showing the Continue screen
         if (isGameOver)
         {
-            continueTimer -= Time.unscaledDeltaTime;
-            continueText.text = "Continue? " + Mathf.Ceil(continueTimer).ToString();
+            continueTimer -= Time.unscaledDeltaTime; // Decrease the timer (unscaled for real-time countdown)
+            continueText.text = "Continue? " + Mathf.Ceil(continueTimer).ToString(); // Update the Continue text
             if (continueTimer <= 0)
             {
-                ShowContinuePanel();
+                ShowContinueScreen(); // Show the Continue screen when the timer reaches 0
             }
+        }
+    }
+
+    public void ShowGameOverPanel()
+    {
+        // Show the Game Over panel and pause the game
+        gameOverPanel.SetActive(true);
+        Time.timeScale = 0f; // Freeze the game
+        isGameOver = true; // Set the game over flag
+        continueTimer = 5f; // Reset the continue timer to 5 seconds
+    }
+
+    public void ShowContinueScreen()
+    {
+        // Transition from Game Over screen to Continue screen
+        gameOverPanel.SetActive(false); // Hide the Game Over panel
+        continuePanel.SetActive(true); // Show the Continue panel
+    }
+
+    public void OnContinueButton()
+    {
+        Debug.Log("Continue button clicked.");
+        if (credits > 0)
+        {
+            credits--; // Deduct one credit
+            UpdateCreditsText(credits); // Update the UI display for credits
+            playerController.currentHealth = playerController.maxHealth; // Restore player's health to max
+            continuePanel.SetActive(false); // Hide the Continue panel
+            gameOverPanel.SetActive(false); // Ensure the Game Over panel is also hidden
+            Time.timeScale = 1f; // Resume the game
+            isGameOver = false; // Reset the game over flag
+            Debug.Log("Game resumed with " + credits + " credits left.");
+        }
+        else
+        {
+            Debug.Log("No credits left.");
+            // Handle what happens when there are no credits left
+        }
+    }
+
+
+    public void OnQuitButton()
+    {
+        // Handle quitting the game when the Quit button is pressed
+        Application.Quit(); // Quit the application
+    }
+
+    public void UpdateCreditsText(int credits)
+    {
+        if (creditsText != null)
+        {
+            creditsText.text = "Credits: " + credits;
+        }
+        else
+        {
+            Debug.LogError("creditsText is not assigned in the UIManager script!");
         }
     }
 
     public void ToggleMenu()
     {
-        bool isActive = menuPanel.activeSelf;
-        menuPanel.SetActive(!isActive);
-        Time.timeScale = isActive ? 1f : 0f; // Pause or resume the game
+        // Toggle the Menu panel and pause/resume the game
+        bool isActive = menuPanel.activeSelf; // Check if the Menu panel is currently active
+        menuPanel.SetActive(!isActive); // Toggle the Menu panel's active state
+        Time.timeScale = isActive ? 1f : 0f; // Pause or resume the game based on the menu state
     }
 
-    public void ShowGameOverPanel()
-    {
-        gameOverPanel.SetActive(true);
-        Time.timeScale = 0f; // Freeze the game
-        isGameOver = true;
-        continueTimer = 5f; // Reset the continue timer
-    }
 
-    private void ShowContinuePanel()
-    {
-        gameOverPanel.SetActive(false);
-        continuePanel.SetActive(true);
-        Time.timeScale = 0f; // Keep the game paused
-    }
-
-    public void OnContinueButton()
-    {
-        continuePanel.SetActive(false);
-        Time.timeScale = 1f; // Resume the game
-        isGameOver = false;
-        // Additional logic to reset the player state
-    }
-
-    public void OnQuitButton()
-    {
-        Application.Quit(); // Quit the game
-    }
 }
